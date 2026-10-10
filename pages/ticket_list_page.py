@@ -33,6 +33,12 @@ class TicketListPage(BasePage):
         self.bulk_action_bar = page.locator("#bulk_action_bar")                          # ← mới
         self.selected_count = page.locator("#selected_count")                            # ← mới
 
+        # ---- iframe 埋め込みプレビュー ----                                           # ← mới
+        self.preview_frame = page.frame_locator("#preview_iframe")
+        self.frame_status_select = self.preview_frame.get_by_role("combobox")
+        self.frame_apply_button = self.preview_frame.get_by_role("button", name="適用")
+        self.frame_result = self.preview_frame.locator("#frame_result")
+
         # ---- Phân trang ----
         self.pagination_summary = page.locator("#pagination_summary_top")
 
@@ -101,3 +107,8 @@ class TicketListPage(BasePage):
     # ---------- Thao tác trên hàng ----------
     def click_delete(self, ticket_id: str) -> None:
         self.row_by_id(ticket_id).get_by_role("button", name="削除", exact=True).click()
+
+            # ---------- iframe ----------                                                       # ← mới
+    def apply_status_in_preview(self, status: str) -> None:
+        self.frame_status_select.select_option(status)
+        self.frame_apply_button.click()
