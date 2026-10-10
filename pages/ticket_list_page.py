@@ -21,9 +21,11 @@ class TicketListPage(BasePage):
 
         # ---- Bảng ----
         self.rows = page.locator("#ticket_tbody tr[data-id]")
-        # <th> 作成日 bị Chromium nhận role "cell" (không phải columnheader) → dùng id     
-        self.created_header = page.locator("#th_created")                                
-        self.sort_icon = page.locator("#sort_icon")                                      
+        # <th> 作成日 bị Chromium nhận role "cell" (không phải columnheader) → dùng id
+        self.created_header = page.locator("#th_created")
+        self.sort_icon = page.locator("#sort_icon")
+        self.created_help_icon = self.created_header.locator(".tooltip-wrap")           # ← mới
+        self.created_tooltip = self.created_header.locator(".tooltip-content")          # ← mới
 
         # ---- Phân trang ----
         self.pagination_summary = page.locator("#pagination_summary_top")
@@ -54,9 +56,12 @@ class TicketListPage(BasePage):
         """priority: '' (全て) / 高 / 中 / 低"""
         self.priority_select.select_option(priority)
 
-    # ---------- Sort ----------
-    def click_created_header(self) -> None:                                             
+    # ---------- Sort / Tooltip ----------
+    def click_created_header(self) -> None:
         self.created_header.click()
+
+    def hover_created_help_icon(self) -> None:                                           # ← mới
+        self.created_help_icon.hover()
 
     # ---------- Đọc dữ liệu bảng ----------
     def column_values(self, col_index: int) -> list[str]:
