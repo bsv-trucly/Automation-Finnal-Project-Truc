@@ -91,6 +91,13 @@ class TicketListPage(BasePage):
     def check_select_all(self) -> None:                                                  # ← mới
         self.select_all_checkbox.check()
 
+        # ---------- Thao tác trên hàng ----------
+    def click_detail(self, ticket_id: str) -> None:                                      # ← mới
+        self.row_by_id(ticket_id).get_by_role("button", name="詳細", exact=True).click()
+
+    def click_delete(self, ticket_id: str) -> None:
+        self.row_by_id(ticket_id).get_by_role("button", name="削除", exact=True).click()
+
     # ---------- Thao tác trên hàng ----------
     def click_delete(self, ticket_id: str) -> None:
         self.row_by_id(ticket_id).get_by_role("button", name="削除", exact=True).click()
