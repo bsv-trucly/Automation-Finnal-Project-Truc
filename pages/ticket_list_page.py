@@ -18,6 +18,7 @@ class TicketListPage(BasePage):
         self.search_button = self.panel.get_by_role("button", name="検索", exact=True)
         self.priority_select = page.get_by_role("combobox", name="優先度で絞り込み")
         self.table_wrap = self.panel.locator(".table-wrap")
+        self.status_filter = page.locator("#status_filter")                              # ← mới
 
         # ---- Bảng ----
         self.rows = page.locator("#ticket_tbody tr[data-id]")
@@ -64,10 +65,13 @@ class TicketListPage(BasePage):
         return int(summary.split("件中")[0])
 
     # ---------- Bộ lọc ----------
+    def click_status_tab(self, status: str) -> None:                                     # ← mới
+        """Bấm tab trạng thái: 全て / 未対応 / 対応中 / 完了"""
+        self.status_filter.get_by_text(status, exact=True).click()
     def select_priority(self, priority: str) -> None:
         """priority: '' (全て) / 高 / 中 / 低"""
         self.priority_select.select_option(priority)
-        
+
     def search_by_button(self, keyword: str) -> None:                                    # ← mới
         """Nhập từ khoá rồi bấm nút 検索"""
         self.search_input.fill(keyword)
