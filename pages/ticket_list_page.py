@@ -67,6 +67,16 @@ class TicketListPage(BasePage):
     def select_priority(self, priority: str) -> None:
         """priority: '' (全て) / 高 / 中 / 低"""
         self.priority_select.select_option(priority)
+        
+    def search_by_button(self, keyword: str) -> None:                                    # ← mới
+        """Nhập từ khoá rồi bấm nút 検索"""
+        self.search_input.fill(keyword)
+        self.search_button.click()
+
+    def search_by_enter(self, keyword: str) -> None:                                     # ← mới
+        """Nhập từ khoá rồi bấm phím Enter"""
+        self.search_input.fill(keyword)
+        self.search_input.press("Enter")        
 
     # ---------- Sort / Tooltip ----------
     def click_created_header(self) -> None:
