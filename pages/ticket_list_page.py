@@ -24,8 +24,14 @@ class TicketListPage(BasePage):
         # <th> 作成日 bị Chromium nhận role "cell" (không phải columnheader) → dùng id
         self.created_header = page.locator("#th_created")
         self.sort_icon = page.locator("#sort_icon")
-        self.created_help_icon = self.created_header.locator(".tooltip-wrap")           # ← mới
-        self.created_tooltip = self.created_header.locator(".tooltip-content")          # ← mới
+        self.created_help_icon = self.created_header.locator(".tooltip-wrap")
+        self.created_tooltip = self.created_header.locator(".tooltip-content")
+        # input thật (opacity:0) – check() trực tiếp vào đây, không click .cb-box        # ← mới
+        self.select_all_checkbox = page.get_by_role("checkbox", name="全て選択")          # ← mới
+
+        # ---- Thanh thao tác hàng loạt ----                                            # ← mới
+        self.bulk_action_bar = page.locator("#bulk_action_bar")                          # ← mới
+        self.selected_count = page.locator("#selected_count")                            # ← mới
 
         # ---- Phân trang ----
         self.pagination_summary = page.locator("#pagination_summary_top")
@@ -60,7 +66,7 @@ class TicketListPage(BasePage):
     def click_created_header(self) -> None:
         self.created_header.click()
 
-    def hover_created_help_icon(self) -> None:                                           # ← mới
+    def hover_created_help_icon(self) -> None:
         self.created_help_icon.hover()
 
     # ---------- Đọc dữ liệu bảng ----------
@@ -76,6 +82,14 @@ class TicketListPage(BasePage):
     def row_by_id(self, ticket_id: str) -> Locator:
         """Hàng của 1 ticket cụ thể (mỗi <tr> có data-id = ID ticket)"""
         return self.page.locator(f"#ticket_tbody tr[data-id='{ticket_id}']")
+
+    # ---------- Checkbox ----------                                                     # ← mới
+    def row_checkbox(self, ticket_id: str) -> Locator:                                   # ← mới
+        """Checkbox của 1 hàng – aria-label dạng 'T-1001を選択'"""
+        return self.page.get_by_role("checkbox", name=f"{ticket_id}を選択")
+
+    def check_select_all(self) -> None:                                                  # ← mới
+        self.select_all_checkbox.check()
 
     # ---------- Thao tác trên hàng ----------
     def click_delete(self, ticket_id: str) -> None:
