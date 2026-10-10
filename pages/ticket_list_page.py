@@ -21,6 +21,9 @@ class TicketListPage(BasePage):
 
         # ---- Bảng ----
         self.rows = page.locator("#ticket_tbody tr[data-id]")
+        # <th> 作成日 bị Chromium nhận role "cell" (không phải columnheader) → dùng id     
+        self.created_header = page.locator("#th_created")                                
+        self.sort_icon = page.locator("#sort_icon")                                      
 
         # ---- Phân trang ----
         self.pagination_summary = page.locator("#pagination_summary_top")
@@ -51,20 +54,24 @@ class TicketListPage(BasePage):
         """priority: '' (全て) / 高 / 中 / 低"""
         self.priority_select.select_option(priority)
 
+    # ---------- Sort ----------
+    def click_created_header(self) -> None:                                             
+        self.created_header.click()
+
     # ---------- Đọc dữ liệu bảng ----------
     def column_values(self, col_index: int) -> list[str]:
         """Lấy text của 1 cột ở tất cả các hàng đang hiển thị"""
         cells = self.rows.locator(f"td:nth-child({col_index + 1})")
         return [text.strip() for text in cells.all_inner_texts()]
 
-    def visible_ids(self) -> list[str]:                                               
+    def visible_ids(self) -> list[str]:
         """Danh sách ID ticket đang hiển thị, ví dụ ['T-1001', 'T-1002', ...]"""
         return self.column_values(COL_ID)
 
-    def row_by_id(self, ticket_id: str) -> Locator:                                    
+    def row_by_id(self, ticket_id: str) -> Locator:
         """Hàng của 1 ticket cụ thể (mỗi <tr> có data-id = ID ticket)"""
         return self.page.locator(f"#ticket_tbody tr[data-id='{ticket_id}']")
 
     # ---------- Thao tác trên hàng ----------
-    def click_delete(self, ticket_id: str) -> None:                                    
+    def click_delete(self, ticket_id: str) -> None:
         self.row_by_id(ticket_id).get_by_role("button", name="削除", exact=True).click()

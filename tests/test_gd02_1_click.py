@@ -4,7 +4,7 @@ import allure
 from playwright.sync_api import expect
 
 from pages.notification_page import NotificationPage
-from pages.ticket_list_page import TicketListPage
+from pages.ticket_list_page import TicketListPage, COL_CREATED
 
 
 @allure.feature("GD02.1-Click")
@@ -42,3 +42,21 @@ class TestGD02_1_Click:
             assert created_first is True
             assert created_second is False
             expect(notif.row_by_title(title)).to_have_count(1)
+
+    @allure.title("GD02.1-06: ソート（作成日・昇順）")                                    # ← mới từ đây
+    def test_gd02_1_06_sort_created_ascending(self, admin_page: TicketListPage):
+        with allure.step("前提: 未ソート状態（aria-sort=none、アイコン=unfold_more）"):
+            expect(admin_page.created_header).to_have_attribute("aria-sort", "none")
+            expect(admin_page.sort_icon).to_have_text("unfold_more")
+
+        with allure.step("1. 「作成日」列見出しを押下する"):
+            admin_page.click_created_header()
+
+        with allure.step("期待: ソートアイコンが上向き矢印になる"):
+            expect(admin_page.created_header).to_have_attribute("aria-sort", "ascending")
+            expect(admin_page.sort_icon).to_have_text("arrow_upward")
+
+        with allure.step("期待: 作成日の昇順に並び替わる"):
+            dates = admin_page.column_values(COL_CREATED)
+            assert len(dates) > 1, "比較できる行が足りない"
+            assert dates == sorted(dates), f"昇順になっていない: {dates}"
