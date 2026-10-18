@@ -20,3 +20,4 @@ def admin_page(login_page: LoginPage) -> TicketListPage:
     login_page.login(ADMIN["id"], ADMIN["password"])
     expect(login_page.header_username).to_have_text(ADMIN["name"])
     return TicketListPage(login_page.page)                
+###NNTT: vì mục đích cuối cùng là report gửi KH nên cần có các hàm như chụp ảnh khi testcase đúng, quay video khi testcase sai, .... để nâng cao chất lượng report. 

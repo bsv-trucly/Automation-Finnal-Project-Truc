@@ -13,6 +13,7 @@ class TestGD02_7_FileUpload:
         # Tạo file .png khoảng 1MB ngay lúc chạy test
         png_file = tmp_path / "sample_1mb.png"
         png_file.write_bytes(b"\x89PNG\r\n\x1a\n" + b"\0" * (1024 * 1024 - 8))
+        ###NNTT: đối với file tmp_path thì nên define ở file test_data.py để tái sử dụng.Ngoài ra hàm liên quan nên để ở folder pages thay vì folder tests.  
 
         detail = TicketDetailDialog(admin_page.page)
 

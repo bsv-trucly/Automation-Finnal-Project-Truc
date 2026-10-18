@@ -4,6 +4,7 @@ from playwright.sync_api import expect
 from pages.ticket_list_page import TicketListPage, COL_SUBJECT, COL_ASSIGNEE
 
 KEYWORD = "ログイン"
+###NNTT: đối với các keyword data test để dễ tracking quản lý nên gom lại để ở test_data thay vì trong riêng lẻ từng file testcase. 
 
 
 @allure.feature("GD02.6-Keyboard")

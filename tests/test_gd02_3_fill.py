@@ -26,6 +26,7 @@ class TestGD02_3_Fill:
         with allure.step("3. 「ログイン」ボタンを押下する"):
             expect(login_page.login_button).to_be_enabled()
             login_page.login_button.click()
+            ###NNTT: việc login thành công để truy cập vào màn hình được tái sử dụng ở nhiều testcase do đó nên define riêng thành @pytest.fixture (access_to_login_page)để tái sử dụng. 
 
         ticket_list = TicketListPage(login_page.page)
 

@@ -121,6 +121,7 @@ class TicketListPage(BasePage):
     # ---------- Thao tác trên hàng ----------
     def click_delete(self, ticket_id: str) -> None:
         self.row_by_id(ticket_id).get_by_role("button", name="削除", exact=True).click()
+    ###NNTT: hàm click_delete đang bị dullicate so với hàm trên. Nhờ chị delete bớt 1 hàm nha. Ngoài ra hàm hiện tại chưa tuân theo POM lắm, chị define locator element delete ra riêng nha. 
 
             # ---------- iframe ----------                                                       # ← mới
     def apply_status_in_preview(self, status: str) -> None:

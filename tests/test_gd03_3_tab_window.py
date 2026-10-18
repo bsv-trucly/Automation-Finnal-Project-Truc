@@ -6,7 +6,7 @@ from pages.ticket_list_page import TicketListPage
 
 @allure.feature("GD03.3-TabWindow")
 class TestGD03_3_TabWindow:
-
+###NNTT: vì mục đích cuối cùng là sẽ làm report gửi KH nên có các mục như allure.feature, allure.title, ... để đảm bảo tính tổ chức và dễ dàng quản lý. 
     @allure.title("GD03.3-01: 別ウィンドウで開く")
     def test_gd03_3_01_open_print_preview_window(self, admin_page: TicketListPage):
         total = admin_page.total_count()

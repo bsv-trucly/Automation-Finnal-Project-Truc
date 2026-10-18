@@ -12,6 +12,7 @@ class NotificationPage(BasePage):
         self.rows = page.locator("#notification_tbody tr[data-id]")
         self.empty_message = page.locator("#notification_tbody td div")
         self.create_button_in_empty = page.get_by_role("button", name="＋通知を作成する", exact=True)
+    ### NNTT: để đảm bảo tính POM và có thể tái sử dụng thì nên define các locator riêng ở file locators.py, ở folder pages nên đảm bảo gọi lại sử dụng. 
 
         # ---- Modal tạo mới ----
         self.modal = page.get_by_role("dialog", name="通知を作成")
@@ -27,6 +28,7 @@ class NotificationPage(BasePage):
     def row_by_title(self, title: str) -> Locator:
         # Chỉ so khớp ô タイトル (cột 2), tránh khớp nhầm với ô 内容
         return self.rows.filter(has=self.page.locator("td:nth-child(2)", has_text=title))
+        ###NNTT: đối với filter có chứa các locator "td:nth-child(2)", has_text=title" tốt nhất nên define riêng ở file locators.py, ở folder pages nên đảm bảo gọi lại sử dụng. 
 
     def create_notification(self, title: str, content: str) -> None:
         self.title_input.fill(title)

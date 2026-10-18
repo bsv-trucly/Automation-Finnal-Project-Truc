@@ -14,7 +14,7 @@ class TestGD02_8_Assertion:
 
         with allure.step("2. パスワードに「wrongpass」を入力する"):
             login_page.password_input.fill("wrongpass")
-
+            ###NNTT: nên tạo và tái sử dụng hàm @pytest.fixture (access_to_login_page) , đối với data input này nên define ở file test_data.py 
         with allure.step("3. 「ログイン」ボタンを押下する"):
             login_page.login_button.click()
 
